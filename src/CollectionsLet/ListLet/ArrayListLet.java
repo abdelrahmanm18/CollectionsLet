@@ -22,6 +22,8 @@ public class ArrayListLet<E> implements ListLet<E> {
         return size > 0;
     }
 
+//    private void resizeUp();
+//private void resizeDown();
     @Override
     public void addFirst(E newElement) {
         for (int i = size; i > 0; i--){
