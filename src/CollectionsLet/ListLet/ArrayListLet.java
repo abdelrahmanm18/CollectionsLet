@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ArrayListLet<E> implements ListLet<E> {
     private static final int START_SIZE = 10;
+    private static final int RFACTOR = 2;
     private int size;
     private E[] elements;
 
@@ -17,15 +18,37 @@ public class ArrayListLet<E> implements ListLet<E> {
         return size;
     }
 
+
     @Override
     public boolean isEmpty() {
-        return size > 0;
+        return size <= 0;
     }
 
-//    private void resizeUp();
-//private void resizeDown();
+
+    //helper method to check if the capacity is around 80%
+    private boolean checkSizeUp(){
+        return (float) size() / elements.length >= 0.8;
+    }
+
+    //helper method to check if the capacity is less than 25%
+    private boolean checkSizeDown(){
+        return size() <= elements.length / 4;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private void resize(int capacity){
+        E[] array = (E []) new Object[capacity];
+        System.arraycopy(elements,0,array,0,size);
+        elements = array;
+    };
+    
     @Override
     public void addFirst(E newElement) {
+        if(checkSizeUp()){
+            resize(elements.length * RFACTOR);
+        }
+
         for (int i = size; i > 0; i--){
             elements[i] = elements[i - 1];
         }
@@ -40,6 +63,9 @@ public class ArrayListLet<E> implements ListLet<E> {
 
     @Override
     public void addLast(E element) {
+        if(checkSizeUp()){
+            resize(elements.length * RFACTOR);
+        }
         elements[size] = element;
         size++;
     }
@@ -50,17 +76,24 @@ public class ArrayListLet<E> implements ListLet<E> {
     }
     @Override
     public E removeFirst(){
+        if(checkSizeDown()){
+            resize(elements.length / RFACTOR);
+        }
+
        E element = elements[0];
        for(int i = 0; i < size - 1; i++){
            elements[i] = elements[i + 1];
        }
        elements[size - 1] = null;
-       size--;
+       size--;  
        return element;
     }
 
     @Override
     public E removeLast() {
+        if(checkSizeDown()){
+            resize(elements.length / RFACTOR);
+        }
         E element = elements[size - 1];
         elements[size - 1] = null;
         return element;
@@ -80,6 +113,10 @@ public class ArrayListLet<E> implements ListLet<E> {
 
     @Override
     public void add(int index, E element) {
+        if(checkSizeUp()){
+            resize(elements.length * RFACTOR);
+        }
+
         for(int i = size; i > index ;i--){
             elements[i] = elements[i - 1];
         }
