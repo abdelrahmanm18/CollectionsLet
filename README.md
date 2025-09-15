@@ -27,7 +27,7 @@ Each interface is implemented by specific classes. For example, the List interfa
 
 ## Implementation notes:
 
-### Array List resizing
+### Array List resizing:
 
 When we should resize the list(the inner array)?
 
@@ -51,7 +51,3 @@ How we should resize and why?
 - Growing the array by multiplicative factor is much faster than additive factor.
 - Resize down by halving the array why?
 ---
-
-
-### Copying arrays using System.array.copy vs loops
-	according to this post[](https://stackoverflow.com/questions/18638743/is-it-better-to-use-system-arraycopy-than-a-for-loop-for-copying-arrays) on stackoverflow the System.array.copy method is faster 
