@@ -57,52 +57,12 @@ public class ArrayListLet<E> implements ListLet<E> {
     }
 
     @Override
-    public E getFirst(){
-        return elements[0];
-    }
-
-    @Override
     public void addLast(E element) {
         if(checkSizeUp()){
             resize(elements.length * RFACTOR);
         }
         elements[size] = element;
         size++;
-    }
-
-    @Override
-    public E getLast() {
-        return elements[size - 1];
-    }
-    @Override
-    public E removeFirst(){
-        if(checkSizeDown()){
-            resize(elements.length / RFACTOR);
-        }
-
-       E element = elements[0];
-       for(int i = 0; i < size - 1; i++){
-           elements[i] = elements[i + 1];
-       }
-       elements[size - 1] = null;
-       size--;  
-       return element;
-    }
-
-    @Override
-    public E removeLast() {
-        if(checkSizeDown()){
-            resize(elements.length / RFACTOR);
-        }
-        E element = elements[size - 1];
-        elements[size - 1] = null;
-        return element;
-    }
-
-    @Override
-    public E get(int index) {
-        // zero indexed
-        return elements[index];
     }
 
     @Override
@@ -122,5 +82,62 @@ public class ArrayListLet<E> implements ListLet<E> {
         }
         elements[index] = element;
         size++;
+    }
+
+    @Override
+    public E getFirst(){
+        return elements[0];
+    }
+
+    @Override
+    public E getLast() {
+        return elements[size - 1];
+    }
+
+    @Override
+    public E get(int index) {
+        // zero indexed
+        return elements[index];
+    }
+    @Override
+    public E removeFirst(){
+        if(checkSizeDown()){
+            resize(elements.length / RFACTOR);
+        }
+
+       E element = elements[0];
+       for(int i = 0; i < size - 1; i++){
+           elements[i] = elements[i + 1];
+       }
+       elements[size - 1] = null;
+       size--;
+       return element;
+    }
+
+    @Override
+    public E removeLast() {
+        if(checkSizeDown()){
+            resize(elements.length / RFACTOR);
+        }
+        E element = elements[size - 1];
+        elements[size - 1] = null;
+        size--;
+        return element;
+    }
+
+    @Override
+    public E remove(int index) {
+        if(checkSizeDown()){
+            resize(elements.length / RFACTOR);
+        }
+
+        E element = get(index);
+        for(int i = index; i < size - 1; i++){
+            elements[i] = elements[i+1];
+        }
+        elements[size - 1] = null;
+        size--;
+
+        return element;
     }
 }
