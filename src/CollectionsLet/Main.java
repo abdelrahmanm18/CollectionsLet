@@ -1,6 +1,7 @@
 package CollectionsLet;
 
-import CollectionsLet.ListLet.ArrayListLet;
+//import CollectionsLet.ListLet.ArrayListLet;
+import CollectionsLet.ListLet.LinkedListLet;
 import CollectionsLet.ListLet.ListLet;
 
 import java.util.ArrayList;
@@ -11,8 +12,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int[] x = new int[10];
-        System.out.println(x);
+       LinkedListLet<Integer> list = new LinkedListLet<>();
+       list.addLast(5);
+       list.addLast(6);
+       list.addLast(7);
+       list.addLast(8);
 
+        System.out.println(list.get(2));
+        System.out.println(list.size());
     }
 }

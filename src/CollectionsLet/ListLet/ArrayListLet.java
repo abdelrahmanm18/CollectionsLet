@@ -41,8 +41,8 @@ public class ArrayListLet<E> implements ListLet<E> {
         E[] array = (E []) new Object[capacity];
         System.arraycopy(elements,0,array,0,size);
         elements = array;
-    };
-    
+    }
+
     @Override
     public void addFirst(E newElement) {
         if(checkSizeUp()){

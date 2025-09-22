@@ -1,5 +1,6 @@
 package CollectionsLet;
 
+
 public interface CollectionsLet<E> {
 
     public int size();
