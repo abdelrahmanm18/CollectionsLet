@@ -1,26 +1,26 @@
 package TestLet;
+import CollectionsLet.ListLet.LinkedListLet;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import CollectionsLet.ListLet.ArrayListLet;
 import CollectionsLet.ListLet.ListLet;
-
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 
-public class ArrayListTest {
+public class LinkedListTest {
     private ListLet<Integer> list;
 
     @BeforeEach
     void setUp(){
-        list = new ArrayListLet<>();
+        list = new LinkedListLet<>();
     }
 
-    /** Check if you can create ArrayList with different parameterized types */
     @Test
     public void shouldAcceptDifferentTypes(){
-        ListLet<String>  l1 = new ArrayListLet<>();
-        ListLet<Double>  l2 = new ArrayListLet<>();
-        ListLet<Boolean> l3 = new ArrayListLet<>();
+        ListLet<String>  l1 = new LinkedListLet<>();
+        ListLet<Double>  l2 = new LinkedListLet<>();
+        ListLet<Boolean> l3 = new LinkedListLet<>();
 
         l1.addFirst("string");
         l2.addFirst(3.14159);
@@ -34,7 +34,7 @@ public class ArrayListTest {
 
     @Test
     void shouldReturnTrueWhenListIsEmptyAfterInitialization(){
-        assertTrue(list.isEmpty(),"should return true after creating a list");
+        assertTrue(list.isEmpty(),"should return true after creating list");
     }
 
     @Test
@@ -80,20 +80,6 @@ public class ArrayListTest {
 
     }
 
-
-    @Test
-    void shouldReturnCorrectSizeAtResizeTrigger(){
-        for(int i = 0; i < 7;i++){
-            list.add(i);
-        }
-        assertEquals(7, list.size(), "should return the correct size before resizing");
-
-        //resize when list size is around 80%, so when we add the eighth element
-        list.add(8);
-        assertEquals(8, list.size(), "should return the correct size after resizing");
-
-    }
-
     @Test
     void shouldReturnCorrectElementAfterRemovingAtIndex(){
         for(int i = 0; i < 25;i++){
@@ -123,7 +109,7 @@ public class ArrayListTest {
         }
         list.remove(12);
 
-        ListLet<Integer> expected = new ArrayListLet<>();
+        ListLet<Integer> expected = new LinkedListLet<>();
         for(int i = 0; i < 25;i++){
             if(i == 12){
                 continue;
@@ -140,8 +126,8 @@ public class ArrayListTest {
     @Test
     void shouldThrowExceptionWhenRemovingElementFromEmptyList(){
         assertAll("assert removing from empty list",
-        () -> assertThrows(RuntimeException.class, () -> list.removeFirst(), "should throw NoSuchElement Exception When removing first element from empty list"),
-        () -> assertThrows(RuntimeException.class, () -> list.removeLast(), "should throw NoSuchElement Exception When removing last element from empty list" )
+                () -> assertThrows(RuntimeException.class, () -> list.removeFirst(), "should throw NoSuchElement Exception When removing first element from empty list"),
+                () -> assertThrows(RuntimeException.class, () -> list.removeLast(), "should throw NoSuchElement Exception When removing last element from empty list" )
         );
     }
 
@@ -152,7 +138,7 @@ public class ArrayListTest {
         list.removeFirst();
         list.removeLast();
         assertAll("Checking if the list is empty after removing all elements",
-                () -> assertTrue(list.isEmpty(), "list should be empty after removing the only element"),
+                () -> assertTrue(list.isEmpty(), "list should be empty after removing all the elements"),
                 () -> assertThrows(RuntimeException.class, () -> list.removeFirst(), "removing first from empty list should throw"),
                 () -> assertThrows(RuntimeException.class, () -> list.removeLast(), "removing last from empty list should throw")
         );
@@ -160,11 +146,11 @@ public class ArrayListTest {
 
     @Test
     void shouldThrowExceptionWhenRemovingElementFromEmptyListWithInvalidIndex(){
-       assertAll("checking invalid index",
-               () -> assertThrows(IndexOutOfBoundsException.class, () -> list.remove(0), "should throw IndexOutOfBounds Exception When removing element from empty list"),
-               () -> assertThrows(IndexOutOfBoundsException.class, () -> list.remove(-1), "should throw IndexOutOfBounds Exception When the index is negative"),
-               () -> assertThrows(IndexOutOfBoundsException.class, () -> list.remove(100), "should throw IndexOutOfBounds Exception when index is greater than size")
-       );
+        assertAll("checking invalid index",
+                () -> assertThrows(IndexOutOfBoundsException.class, () -> list.remove(0), "should throw IndexOutOfBounds Exception When removing element from empty list"),
+                () -> assertThrows(IndexOutOfBoundsException.class, () -> list.remove(-1), "should throw IndexOutOfBounds Exception When the index is negative"),
+                () -> assertThrows(IndexOutOfBoundsException.class, () -> list.remove(100), "should throw IndexOutOfBounds Exception when index is greater than size")
+        );
     }
 
     @Test
@@ -173,7 +159,7 @@ public class ArrayListTest {
             list.add(i);
         }
 
-         assertThrows(IndexOutOfBoundsException.class, () -> list.remove(100));
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(100));
     }
 
     @Test
@@ -225,50 +211,5 @@ public class ArrayListTest {
         assertEquals(5, list.size());
     }
 
-    @Test
-    void shouldAddAtIndexTriggeringResize() {
-        // trigger resize threshold
-        for(int i = 0; i < 8; i++) {
-            list.add(i);
-        }
 
-        // Add in middle should trigger resize
-        list.add(4, 999);
-        assertEquals(9, list.size());
-        assertEquals(999, list.get(4));
-    }
-
-    @Test
-    void shouldResizeWhenAddingFirstElementsToFullCapacity(){
-        for(int i = 0; i < 8; i++) {
-            list.add(i);
-        }
-        
-        // Adding first should trigger resize
-        list.addFirst(999);
-        assertEquals(9, list.size());
-        assertEquals(999, list.getFirst());
-        
-        // Verify order is maintained
-        for(int i = 0; i < 8; i++) {
-            assertEquals(i, (int)list.get(i + 1));
-        }
-    }
-
-@Test
-void shouldNotResizeDownUnlessBelow25Percent() {
-    for(int i = 0; i < 20; i++) {
-        list.add(i);
-    }
-
-    // If capacity is 20, 25% = 5, so keep 6 elements
-    for(int i = 0; i < 14; i++) {
-        list.removeLast();
-    }
-    
-    assertEquals(6, list.size());
-    // Add one more to verify it still works
-    list.add(999);
-    assertEquals(7, list.size());
-}
 }
