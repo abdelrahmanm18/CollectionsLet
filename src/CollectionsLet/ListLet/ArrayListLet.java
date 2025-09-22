@@ -106,10 +106,6 @@ public class ArrayListLet<E> implements ListLet<E> {
 
     @Override
     public E get(int index) {
-        if(isEmpty()){
-            throw new NoSuchElementException("Cannot get element from empty list");
-        }
-
         if(index < 0 || index >= size){
             throw new IndexOutOfBoundsException("Index " + index + " out of bounds for length " + size);
         }
@@ -152,9 +148,6 @@ public class ArrayListLet<E> implements ListLet<E> {
 
     @Override
     public E remove(int index) {
-        if(isEmpty()){
-            throw new NoSuchElementException("Cannot remove from empty list");
-        }
 
         if(index < 0 || index >= size){
             throw new IndexOutOfBoundsException("Index " + index + " out of bounds for length " + size);

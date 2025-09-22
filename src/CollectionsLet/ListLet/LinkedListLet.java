@@ -1,5 +1,7 @@
 package CollectionsLet.ListLet;
 
+import java.util.NoSuchElementException;
+
 public class LinkedListLet<E> implements ListLet<E>{
     private class Node{
         public E value;
@@ -69,6 +71,10 @@ public class LinkedListLet<E> implements ListLet<E>{
 
     @Override
     public void add(int index, E element){
+        if(index < 0 || index > size){
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+
         int i = 0;
         Node current = sentinelFront.next;
         while (i < index && current != null){
@@ -83,6 +89,10 @@ public class LinkedListLet<E> implements ListLet<E>{
 
     @Override
     public E removeFirst(){
+        if(isEmpty()){
+            throw new NoSuchElementException("Cannot remove element from empty list");
+        }
+
         E element = sentinelFront.next.value;
         sentinelFront.next.next.prev = sentinelFront;
         sentinelFront.next = sentinelFront.next.next;
@@ -91,6 +101,10 @@ public class LinkedListLet<E> implements ListLet<E>{
 
     @Override
     public E removeLast(){
+        if(isEmpty()){
+            throw new NoSuchElementException("Cannot remove element from empty list");
+        }
+
         E element = sentinelBack.prev.value;
         sentinelBack.prev.prev.next = sentinelBack;
         sentinelBack.prev = sentinelBack.prev.prev;
@@ -100,6 +114,10 @@ public class LinkedListLet<E> implements ListLet<E>{
 
     @Override
     public E remove(int index){
+        if(index < 0 || index >= size){
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+
         int i = 0;
         Node current = sentinelFront.next;
         while (i < index && current != null){
@@ -115,16 +133,29 @@ public class LinkedListLet<E> implements ListLet<E>{
 
     @Override
     public E getFirst(){
+        if(isEmpty()){
+            throw new NoSuchElementException("Cannot get first element from empty list");
+        }
+
         return sentinelFront.next.value;
     }
 
     @Override
     public E getLast(){
+        if(isEmpty()){
+            throw new NoSuchElementException("Cannot get last element from empty list");
+        }
+
         return sentinelBack.prev.value;
     }
 
     @Override
     public E get(int index){
+
+        if(index < 0 || index >= size){
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+
         int i = 0;
         Node current = sentinelFront.next;
         while (i < index && current != null){

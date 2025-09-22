@@ -12,10 +12,4 @@ public interface ListLet<E> extends CollectionsLet<E> {
      E getFirst();
      E getLast();
      E get(int index);
-
-
-
-
-
-
 }
