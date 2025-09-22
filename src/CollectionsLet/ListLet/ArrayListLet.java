@@ -2,6 +2,7 @@ package CollectionsLet.ListLet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ArrayListLet<E> implements ListLet<E> {
     private static final int START_SIZE = 10;
@@ -87,7 +88,7 @@ public class ArrayListLet<E> implements ListLet<E> {
     @Override
     public E getFirst(){
         if(isEmpty()){
-            throw new IllegalStateException("Cannot get element from empty list");
+            throw new NoSuchElementException("Cannot get element from empty list");
         }
         return elements[0];
     }
@@ -95,7 +96,7 @@ public class ArrayListLet<E> implements ListLet<E> {
     @Override
     public E getLast() {
         if(isEmpty()){
-            throw new IllegalStateException("Cannot get element from empty list");
+            throw new NoSuchElementException("Cannot get element from empty list");
         }
         return elements[size - 1];
     }
@@ -103,7 +104,7 @@ public class ArrayListLet<E> implements ListLet<E> {
     @Override
     public E get(int index) {
         if(isEmpty()){
-            throw new IllegalStateException("Cannot get element from empty list");
+            throw new NoSuchElementException("Cannot get element from empty list");
         }
 
         if(index < 0 || index >= size){
@@ -115,7 +116,7 @@ public class ArrayListLet<E> implements ListLet<E> {
     @Override
     public E removeFirst(){
         if(isEmpty()){
-            throw new IllegalStateException("Cannot remove from empty list");
+            throw new NoSuchElementException("Cannot remove from empty list");
         }
 
         if(checkSizeDown()){
@@ -134,7 +135,7 @@ public class ArrayListLet<E> implements ListLet<E> {
     @Override
     public E removeLast() {
         if(isEmpty()){
-            throw new IllegalStateException("Cannot remove from empty list");
+            throw new NoSuchElementException("Cannot remove from empty list");
         }
 
         if(checkSizeDown()){
@@ -149,7 +150,7 @@ public class ArrayListLet<E> implements ListLet<E> {
     @Override
     public E remove(int index) {
         if(isEmpty()){
-            throw new IllegalStateException("Cannot remove from empty list");
+            throw new NoSuchElementException("Cannot remove from empty list");
         }
 
         if(index < 0 || index >= size){
