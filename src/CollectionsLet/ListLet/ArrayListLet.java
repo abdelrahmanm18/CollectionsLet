@@ -25,7 +25,6 @@ public class ArrayListLet<E> implements ListLet<E> {
         return size <= 0;
     }
 
-
     //helper method to check if the capacity is around 80%
     private boolean checkSizeUp(){
         return (float) size() / elements.length >= 0.8;
@@ -74,6 +73,10 @@ public class ArrayListLet<E> implements ListLet<E> {
 
     @Override
     public void add(int index, E element) {
+        if(index < 0 || index > size){
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+
         if(checkSizeUp()){
             resize(elements.length * RFACTOR);
         }
