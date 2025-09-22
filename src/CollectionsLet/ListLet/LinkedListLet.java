@@ -94,6 +94,7 @@ public class LinkedListLet<E> implements ListLet<E>{
         E element = sentinelBack.prev.value;
         sentinelBack.prev.prev.next = sentinelBack;
         sentinelBack.prev = sentinelBack.prev.prev;
+        size--;
         return element;
     }
 
